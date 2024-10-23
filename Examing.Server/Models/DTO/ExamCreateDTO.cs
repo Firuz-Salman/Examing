@@ -2,9 +2,9 @@
 {
      public class ExamCreateDTO
      {
-          public DateTime Date { get; set; }
-          public Guid StudentId { get; set; }
-          public Guid LessonId { get; set; }
-          public int Grade { get; set; }
+          public required DateTime Date { get; set; }
+          public required Guid StudentId { get; set; }
+          public required Guid LessonId { get; set; }
+          public required int Grade { get; set; }
      }
 }

@@ -20,13 +20,26 @@ namespace Examing.Server
                builder.Services.AddDbContext<ApplicationDbContext>(options =>
                                   options.UseSqlServer(connectionString));
 
-    //           builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+               //           builder.Services.AddDbContext<ApplicationDbContext>(options =>
+               //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+               builder.Services.AddCors(options =>
+               {
+                    options.AddPolicy("AllowSpecificOrigin",
+                        policy =>
+                        {
+                             policy.WithOrigins("*") 
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+                        });
+               });
 
                var app = builder.Build();
 
                app.UseDefaultFiles();
                app.UseStaticFiles();
+
+               app.UseCors("AllowSpecificOrigin");
 
                // Configure the HTTP request pipeline.
                if (app.Environment.IsDevelopment())
@@ -46,3 +59,4 @@ namespace Examing.Server
           }
      }
 }
+

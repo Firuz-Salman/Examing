@@ -1,0 +1,68 @@
+<mat-drawer-container class="  h-full" autosize>
+  <mat-drawer #drawer class=" " mode="side">
+    <div class="flex flex-col gap-4 py-8 px-2 w-60">
+
+      <button mat-raised-button [color]="'primary'" (click)="show='lesson'">
+        Dərslər
+      </button>
+      <button mat-raised-button [color]="'primary'" (click)="show = 'student'">
+        Şagirdlər
+      </button>
+      <button mat-raised-button [color]="'primary'" (click)="show = 'exam'">
+        İmtahanlar
+      </button>
+    </div>
+  </mat-drawer>
+
+  <div class="  w-full h-full flex flex-col  bg-gray-100 justify-start items-start">
+    <div class="flex w-full justify-between p-4 ">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <button type="button" [color]="'primary'" mat-flat-button (click)="addNew()">
+        <mat-icon>add</mat-icon>
+        <span>Add new {{ show }}</span>
+      </button>
+    </div>
+
+    <div class="flex flex-col flex-grow p-12 min-w-96">
+      @if (show === 'lesson') {
+        <div class="flex flex-col h-full overflow-hidden">
+          <h2 class="text-4xl pb-12">Lessons</h2>
+          <div class="flex flex-col overflow-auto">
+            @for (lesson of lessons; track $index) {
+              <p class=" w-full hover:bg-blue-100 flex flex-col text-start px-6 py-3 border-b-2 border-gray-200"
+                 (click)="itemClicked(lesson)">{{ lesson.name }} {{ lesson.teacherName }} {{ lesson.teacherSurname }} ({{ lesson.class }} Sinif)</p>
+            }
+          </div>
+        </div>
+      }
+      @if (show === 'student') {
+        <div class="flex flex-col h-full overflow-hidden">
+          <h2 class="text-4xl pb-12">Students</h2>
+          <div class="flex flex-col overflow-auto">
+            @for (student of students; track $index) {
+              <p class=" w-full hover:bg-blue-100 flex flex-col text-start px-6 py-3 border-b-2 border-gray-200"
+                 (click)="itemClicked(student)">{{ student.studentNumber }} - {{ student.name }} {{ student.surname }} ({{ student.class }} sinif şagirdi)</p>
+            }
+          </div>
+        </div>
+      }
+      @if (show === 'exam') {
+        <div class="flex flex-col h-full overflow-hidden">
+          <h2 class="text-4xl pb-12">Exams</h2>
+          <div class="flex flex-col overflow-auto">
+            @for (exam of exams; track $index) {
+              <p class=" w-full hover:bg-blue-100 flex flex-col text-start px-6 py-3 border-b-2 border-gray-200"
+                 (click)="itemClicked(exam)"> Exam date: {{ exam.date | date }} - </p>
+            }
+          </div>
+        </div>
+      }
+
+
+    </div>
+  </div>
+
+</mat-drawer-container>

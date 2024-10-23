@@ -2,9 +2,9 @@
 {
      public class StudentCreateDTO
      {
-          public int StudentNumber { get; set; }
-          public string Name { get; set; }
-          public string Surname { get; set; }
-          public int Class { get; set; }
+          public required int StudentNumber { get; set; }
+          public required string Name { get; set; }
+          public required string Surname { get; set; }
+          public required int Class { get; set; }
      }
 }

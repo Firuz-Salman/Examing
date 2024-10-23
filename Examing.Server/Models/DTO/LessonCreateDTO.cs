@@ -2,10 +2,10 @@
 {
      public class LessonCreateDTO
      {
-          public string Code { get; set; }
-          public string Name { get; set; }
-          public int Class { get; set; }
-          public string TeacherName { get; set; }
-          public string TeacherSurname { get; set; }
+          public required string Code { get; set; }
+          public required string Name { get; set; }
+          public required int Class { get; set; }
+          public required string TeacherName { get; set; }
+          public required string TeacherSurname { get; set; }
      }
 }
