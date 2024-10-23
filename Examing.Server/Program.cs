@@ -1,5 +1,6 @@
 
 using Examing.Server.Data;
+using Examing.Server.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Examing.Server
@@ -10,18 +11,13 @@ namespace Examing.Server
           {
                var builder = WebApplication.CreateBuilder(args);
 
-               // Add services to the container.
-
                builder.Services.AddControllers();
-               // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
                builder.Services.AddEndpointsApiExplorer();
                builder.Services.AddSwaggerGen();
                var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-               builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                                  options.UseSqlServer(connectionString));
+               builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
-               //           builder.Services.AddDbContext<ApplicationDbContext>(options =>
-               //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+               builder.Services.AddAutoMapper(typeof(MappingProfile));
 
                builder.Services.AddCors(options =>
                {
@@ -33,6 +29,10 @@ namespace Examing.Server
                    .AllowAnyMethod();
                         });
                });
+
+               builder.Services.AddScoped(typeof(ExamService));
+               builder.Services.AddScoped(typeof(LessonService));
+               builder.Services.AddScoped(typeof(StudentService));
 
                var app = builder.Build();
 

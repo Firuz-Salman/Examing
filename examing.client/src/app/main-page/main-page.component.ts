@@ -29,7 +29,14 @@ export class MainPageComponent implements OnInit {
   lessons: LessonViewModel[] = [];
   exams: ExamViewModel[] = [];
 
-  show: 'lesson' | 'student' | 'exam' = 'lesson';
+  mode: 'lesson' | 'student' | 'exam' = 'lesson';
+
+  modeTranslate = {
+    lesson: 'dərs',
+    student: 'şagird',
+    exam: 'imtahan'
+  }
+
 
 
   constructor(private service: MainPageService, private dialog: MatDialog) {
@@ -145,11 +152,11 @@ export class MainPageComponent implements OnInit {
   }
 
   addNew() {
-    if (this.show === 'lesson') {
+    if (this.mode === 'lesson') {
       this.createLesson();
-    } else if (this.show === 'student') {
+    } else if (this.mode === 'student') {
       this.createStudent();
-    } else if (this.show === 'exam') {
+    } else if (this.mode === 'exam') {
       this.createExam();
     }
   }

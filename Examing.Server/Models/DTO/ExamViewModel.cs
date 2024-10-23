@@ -7,8 +7,8 @@ namespace Examing.Server.Models.DTO
      {
           
           public DateTime Date { get; set; }          
-          public required Lesson Student { get; set; }
-          public required Student Lesson { get; set; }
+          public Student Student { get; set; }
+          public Lesson Lesson { get; set; }
           public int Grade { get; set; }
      }
 }

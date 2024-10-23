@@ -7,7 +7,6 @@ namespace Examing.Server.Data
      {
           public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-          // Определи DbSet для каждой сущности
           public DbSet<Exam> Exams { get; set; }
           public DbSet<Lesson> Lessons { get; set; }
           public DbSet<Student> Students { get; set; }
@@ -19,61 +18,62 @@ namespace Examing.Server.Data
           {
                modelBuilder.Entity<Lesson>(entity =>
                {
-                    // LessonCode üçün char(3) constraint
+                    // LessonCode char(3)
                     entity.Property(e => e.Code)
-                        .HasMaxLength(3) // char(3) kimi istifadə olunur
-                        .IsFixedLength() // Bu, 'char' tipini təmsil edir (sabit uzunluq).
-                        .IsRequired();   // NULL ola bilməz
+                        .HasMaxLength(3)
+                        .IsFixedLength()
+                        .IsRequired();
 
-                    // LessonName üçün varchar(30) constraint
+                    // LessonName varchar(30)
                     entity.Property(e => e.Name)
-                          .HasMaxLength(30) // varchar(30)
-                          .IsRequired();    // NULL ola bilməz
+                          .HasMaxLength(30)
+                          .IsRequired();
 
-                    // Class üçün number(2,0) constraint
+                    // Class number(2,0)
                     entity.Property(e => e.Class)
-                          .HasPrecision(2, 0) // number(2,0) kimi dəqiqliyi təyin edir
-                          .IsRequired();      // NULL ola bilməz
+                          .HasPrecision(2, 0)
+                          .IsRequired();
 
-                    // TeacherName üçün varchar(20) constraint
+                    // TeacherName varchar(20)
                     entity.Property(e => e.TeacherName)
-                          .HasMaxLength(20) // varchar(20)
-                          .IsRequired();    // NULL ola bilməz
+                          .HasMaxLength(20)
+                          .IsRequired();
 
-                    // TeacherSurname üçün varchar(20) constraint
+                    // TeacherSurname varchar(20)
                     entity.Property(e => e.TeacherSurname)
-                          .HasMaxLength(20) // varchar(20)
-                          .IsRequired();    // NULL ola bilməz
+                          .HasMaxLength(20)
+                          .IsRequired();
                });
 
                modelBuilder.Entity<Student>(entity =>
                {
-                    
+                    //StudentNumber number(5,0)
                     entity.Property(e => e.StudentNumber)
-                          .HasPrecision(5, 0) // number(5,0) kimi dəqiqliyi təyin edir
-                          .IsRequired();      // NULL ola bilməz
+                          .HasPrecision(5, 0)
+                          .IsRequired();
 
+                    //Name varchar(30)
                     entity.Property(e => e.Name)
-                          .HasMaxLength(30) // varchar(30)
-                          .IsRequired();    // NULL ola bilməz
-                    
-                    
-                    entity.Property(e => e.Surname)
-                          .HasMaxLength(30) // varchar(30)
-                          .IsRequired();    // NULL ola bilməz
+                          .HasMaxLength(30)
+                          .IsRequired();
 
-                    // Class üçün number(2,0) constraint
+                    //Surname  varchar(30)
+                    entity.Property(e => e.Surname)
+                          .HasMaxLength(30)
+                          .IsRequired();
+
+                    // Class number(2,0)
                     entity.Property(e => e.Class)
-                          .HasPrecision(2, 0) // number(2,0) kimi dəqiqliyi təyin edir
-                          .IsRequired();      // NULL ola bilməz
+                          .HasPrecision(2, 0)
+                          .IsRequired();
                });
 
                modelBuilder.Entity<Exam>(entity =>
                {
-
+                    //Grade number(5,0)
                     entity.Property(e => e.Grade)
-                          .HasPrecision(1, 0) // number(5,0) kimi dəqiqliyi təyin edir
-                          .IsRequired();      // NULL ola bilməz
+                          .HasPrecision(1, 0)
+                          .IsRequired();
                });
           }
 

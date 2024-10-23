@@ -1,6 +1,7 @@
 ﻿using Examing.Server.Data;
 using Examing.Server.Models.DTO;
 using Examing.Server.Models.Entities;
+using Examing.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,28 +11,24 @@ namespace Examing.Server.Controllers
      [Route("api/[controller]")]
      public class StudentController : Controller
      {
-          private readonly ApplicationDbContext _context;
+          private readonly StudentService _studentService;
 
-        public StudentController(ApplicationDbContext context)
+        public StudentController(StudentService studentService)
         {
-               _context = context;
+               _studentService = studentService;
         }
 
 
           [HttpGet]
           public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
           {
-               return await _context.Students.ToListAsync();
+               return Ok(await _studentService.GetStudentsAsync());
           }
 
           [HttpPost]
           public async Task<ActionResult<Student>> CreateExam(StudentCreateDTO student)
-          {
-               var studentEntity = new Student {StudentNumber  = student.StudentNumber, Class = student.Class, Name = student.Name, Surname = student.Surname };
-               _context.Students.Add(studentEntity);
-               await _context.SaveChangesAsync();
-
-               return CreatedAtAction(nameof(GetStudents), studentEntity);
+          {    
+               return CreatedAtAction(nameof(GetStudents), await _studentService.CreateStudentAsync(student));
           }
      }
 }

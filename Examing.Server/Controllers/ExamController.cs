@@ -1,8 +1,7 @@
-﻿using Examing.Server.Data;
-using Examing.Server.Models.DTO;
+﻿using Examing.Server.Models.DTO;
 using Examing.Server.Models.Entities;
+using Examing.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Examing.Server.Controllers
 {
@@ -10,25 +9,23 @@ namespace Examing.Server.Controllers
      [Route("api/[controller]")]
      public class ExamController : ControllerBase
      {
-          private readonly ApplicationDbContext _context;
+          private readonly ExamService _examService;
 
-          public ExamController(ApplicationDbContext context)
+          public ExamController(ExamService examService)
           {
-               _context = context;
+               _examService = examService;
           }
 
           [HttpGet]
-          public async Task<ActionResult<IEnumerable<Exam>>> GetExams()
+          public async Task<ActionResult<IEnumerable<ExamViewModel>>> GetExams()
           {
-               return await _context.Exams.Include(x => x.Lesson).Include(X=>X.Student).ToListAsync();
+               return Ok(await _examService.GetExamsAsync());
           }
 
           [HttpPost]
           public async Task<ActionResult<Exam>> CreateExam(ExamCreateDTO exam)
           {
-               var examEntity = new Exam { Date = exam.Date, Grade = exam.Grade, LessonId = exam.LessonId, StudentId = exam.StudentId }; 
-               _context.Exams.Add(examEntity);
-               await _context.SaveChangesAsync();
+               var examEntity = await _examService.CreateExamAsync(exam);
                              
                return CreatedAtAction(nameof(GetExams), examEntity);
           }
